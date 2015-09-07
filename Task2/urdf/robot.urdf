@@ -75,8 +75,8 @@
   </joint>
 
 <joint name="left_arm_to_lift" type="fixed">
-    <parent link="left_arm"/>
-    <child link="lift"/>
+    <parent link="lift"/>
+    <child link="left_arm"/>
     <origin xyz="1 0 0"/>
   </joint>
   <joint name="right_arm_to_lift" type="fixed">
