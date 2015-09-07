@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<robot name="lift">
+
+<link name="base_link">
+  </link>
+  <link name="left_leg">
+        <visual>
+      <geometry>
+        <cylinder length="1" radius="0.1"/>
+      </geometry>
+    </visual>
+</link>
+  <link name="right_leg">
+        <visual>
+      <geometry>
+        <cylinder length="1" radius="0.1"/>
+      </geometry>
+    </visual>
+</link>
+<link name="lift">
+  <visual>
+    <geometry>
+      <box size="1 0.5 0.1">
+      </box>
+    </geometry>
+    <origin xyz="0 -0.5 0" rpy="1.57 0 1.57"/>
+  </visual>
+</link>
+<link name="left_arm">
+  <visual>
+    <geometry>
+      <cylinder length="1" radius="0.05">
+      </cylinder>
+    </geometry>
+    <origin rpy="0 1.57 0" xyz="0.5 0 0">
+    </origin>
+  </visual>
+</link>
+
+<link name="right_arm">
+  <visual>
+    <geometry>
+      <cylinder length="1" radius="0.05">
+      </cylinder>
+    </geometry>
+    <origin rpy="0 1.57 0" xyz="0.5 0 0">
+    </origin>
+  </visual>
+</link>
+
+<joint name="base_to_right_leg" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_leg"/>
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>
+  </joint>
+  <joint name="base_to_left_leg" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_leg"/>
+    <origin rpy="0 0 0" xyz="0 -1 0.5"/>
+  </joint>
+
+  <joint name="right_leg_right_arm" type="revolute">
+    <parent link="right_leg"/>
+    <child link="right_arm"/>
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    <limit effort="330.0" lower="-0.78539816339" upper="0.78539816339" velocity="2.16"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+<joint name="left_leg_left_arm" type="revolute">
+    <parent link="left_leg"/>
+    <child link="left_arm"/>
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    <limit effort="330.0" lower="-0.78539816339" upper="0.78539816339" velocity="2.16"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+<joint name="left_arm_to_lift" type="fixed">
+    <parent link="left_arm"/>
+    <child link="lift"/>
+    <origin xyz="1 0 0"/>
+  </joint>
+  <joint name="right_arm_to_lift" type="fixed">
+    <parent link="right_arm"/>
+    <child link="lift"/>
+    <origin xyz="1 0 0"/>
+  </joint>
+  
+</robot>

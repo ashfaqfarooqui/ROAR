@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot name="navBot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.4 .2 .1"/>
+      </geometry>
+      <origin xyz="0 0 0.07"/>
+    </visual>
+  </link>
+<!--     <link name="right_wheel">
+    <visual>
+      <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.035"/>
+      </geometry>
+      <material name="black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  <joint name="right_frontjoint" type="continuous">
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin rpy="0 0 0" xyz="0.133333333333 0 0"/>
+  </joint> -->
+ <!--  <link name="left_wheel">
+    <visual>
+      <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.035"/>
+      </geometry>
+      <material name="black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  <joint name="left_wheel_joint" type="continuous">
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin rpy="0 0 0" xyz="-0.133333333333 0 0"/>
+  </joint> -->
+    <!-- <link name="world"/> -->
+<!--   <joint name="world_joint" type="planar">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+  </joint> -->
+</robot>
