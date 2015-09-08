@@ -12,7 +12,7 @@
 
   <!-- BEGIN ROBOT 1-->
   <group ns="Robot1">
-<!--     <param name="tf_prefix" value="robot1_tf" /> -->
+    <!-- <param name="tf_prefix" value="robot1_tf" /> -->
     <include file="one_robot.launch" >
       <arg name="init_pose" value="-x 2.5 -y 0 -z 0" />
       <arg name="robot_name"  value="Robot1" />
@@ -20,13 +20,12 @@
   </group>
 
   <!-- BEGIN ROBOT 2-->
-
+<!-- 
   <group ns="Robot2">
-    <!-- <param name="tf_prefix" value="robot2_tf" /> -->
     <include file="one_robot.launch" >
       <arg name="init_pose" value="-x -1.5 -y 0 -z 0" />
       <arg name="robot_name"  value="Robot2" />
     </include>
-  </group>
+  </group> -->
 
 </launch>

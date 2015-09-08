@@ -39,7 +39,7 @@ def handleSimulateLift(req):
         if req.directionToMove == "up":
         msg.name.append('right_leg_right_arm')
         msg.name.append('left_leg_left_arm')
-        jointVal += 0.05
+        jointVal -= 0.05
         msg.position.append(jointVal)
         msg.position.append(jointVal)
         jointStatePub.publish(msg)

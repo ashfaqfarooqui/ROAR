@@ -12,7 +12,7 @@
     <rosparam command="load" file="$(find turtlebot_bringup)/config/diagnostics.yaml" />
   </node> -->
 
-    <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen">
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <param name="publish_frequency" type="double" value="30.0" />
     <param name="tf_prefix" type="string" value="$(arg robot_name)" />
     </node>
@@ -20,7 +20,6 @@
 
     <!-- The odometry estimator, throttling, fake laser etc. go here -->
     <!-- All the stuff as from usual robot launch file -->
-
 
   <!-- The odometry estimator -->
   <!-- Fake laser -->
@@ -31,7 +30,7 @@
     <param name="output_frame_id" value="/camera_depth_frame"/>
     <param name="range_min" value="0.45"/>
     <remap from="image" to="/camera/depth/image_raw"/>
-    <remap from="scan" to="/scan"/>
+    <remap from="scan" to="$(arg robot_name)/scan"/>
   </node>
 
 
@@ -46,13 +45,17 @@
     <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
     <arg name="odom_frame_id" value="$(arg robot_name)/odom"/>
     <arg name="base_frame_id" value="$(arg robot_name)/base_footprint"/>
+    <arg name="scan_topic"      value="/scan"/> 
+    <arg name="global_frame_id" value="map"/>
   </include>
 
   <!-- Move base -->
-  <include file="move_base.launch.xml">
+<!--   <include file="move_base.launch.xml">
     <arg name="odom_frame_id" value="$(arg robot_name)/odom"/>
     <arg name="base_frame_id" value="$(arg robot_name)/base_footprint"/>
     <arg name="odom_topic" value="$(arg robot_name)/odom_topic"/>
-  </include>
+    <arg name="laser_topic" value="/scan" />
 
+  </include>
+ -->
 </launch>
