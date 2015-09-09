@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
  catkin_python_setup()
  catkin_package()
 
-#install(PROGRAMS 
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#   )
+install(PROGRAMS src/simulate_lift/simulate_lift.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+   )
 

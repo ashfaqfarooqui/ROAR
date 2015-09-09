@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>rose_msg</name>
+  <name>roar_msg</name>
   <version>0.0.0</version>
   <description>The msg package</description>
 
