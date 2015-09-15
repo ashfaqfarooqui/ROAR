@@ -6,7 +6,12 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1/Tree1/odom1
+        - /TF1/Status1
+        - /DepthCloud1/Status1
+        - /DepthCloud1/Occlusion Compensation1
+        - /DepthCloud2
+        - /DepthCloud2/Status1
+        - /DepthCloud2/Auto Size1
       Splitter Ratio: 0.5
     Tree Height: 377
   - Class: rviz/Selection
@@ -27,7 +32,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: DepthCloud
 Visualization Manager:
   Class: ""
   Displays:
@@ -49,8 +54,8 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Attached Body Color: 150; 50; 150
-      Class: moveit_rviz_plugin/RobotState
+    - Alpha: 1
+      Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
       Links:
@@ -63,23 +68,37 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
           Value: true
-      Name: RobotState
-      Robot Alpha: 1
+        left_leg:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_leg:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
       Robot Description: robot_description
-      Robot State Topic: display_robot_state
-      Show All Links: true
-      Show Highlights: true
+      TF Prefix: ""
+      Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Alpha: 0.7
-      Class: rviz/Map
-      Color Scheme: map
-      Draw Behind: false
-      Enabled: true
-      Name: Map
-      Topic: /map
-      Value: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
@@ -87,7 +106,25 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
-        odom:
+        camera_depth_frame:
+          Value: true
+        camera_depth_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        camera_rgb_frame:
+          Value: true
+        camera_rgb_optical_frame:
+          Value: true
+        left_arm:
+          Value: true
+        left_leg:
+          Value: true
+        lift:
+          Value: true
+        right_arm:
+          Value: true
+        right_leg:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -95,15 +132,103 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            {}
+        base_link:
+          camera_link:
+            camera_depth_frame:
+              camera_depth_optical_frame:
+                {}
+            camera_rgb_frame:
+              camera_rgb_optical_frame:
+                {}
+          left_leg:
+            left_arm:
+              {}
+          right_leg:
+            right_arm:
+              lift:
+                {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Auto Size:
+        Auto Size Factor: 1
+        Value: true
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/DepthCloud
+      Color: 255; 255; 255
+      Color Image Topic: ""
+      Color Transformer: ""
+      Color Transport Hint: raw
+      Decay Time: 0
+      Depth Map Topic: /depth/image_raw
+      Depth Map Transport Hint: raw
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: DepthCloud
+      Occlusion Compensation:
+        Occlusion Time-Out: 30
+        Value: false
+      Position Transformer: ""
+      Queue Size: 5
+      Selectable: true
+      Size (Pixels): 3
+      Style: Flat Squares
+      Topic Filter: true
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Auto Size:
+        Auto Size Factor: 1
+        Value: true
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/DepthCloud
+      Color: 255; 255; 255
+      Color Image Topic: ""
+      Color Transformer: RGB8
+      Color Transport Hint: raw
+      Decay Time: 0
+      Depth Map Topic: /camera/depth/image
+      Depth Map Transport Hint: raw
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: DepthCloud
+      Occlusion Compensation:
+        Occlusion Time-Out: 30
+        Value: false
+      Position Transformer: XYZ
+      Queue Size: 5
+      Selectable: true
+      Size (Pixels): 3
+      Style: Flat Squares
+      Topic Filter: true
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: odom
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -124,7 +249,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 5.18726
+      Distance: 6.56363
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -136,10 +261,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.350398
+      Pitch: 0.390398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.330397
+      Yaw: 1.5804
     Saved: ~
 Window Geometry:
   Displays:
