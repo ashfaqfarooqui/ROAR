@@ -1,0 +1,27 @@
+[
+    {
+        "Obj": "Robot",
+        "Name": "Robot1",
+        "Position": [-3, -3, 0]
+    },
+    {
+        "Obj": "Robot",
+        "Name": "Robot2",
+        "Position": [3, 3, 0]
+    },
+    {
+        "Obj": "Bin",
+        "Name": "Bin1",
+        "Position": [4, 4, 0]
+    },
+    {
+        "Obj": "Bin",
+        "Name": "Bin2",
+        "Position": [-4, -4, 0]
+    },
+    {
+        "Obj": "Truck",
+        "Name": "Truck",
+        "Position": [0, 0, 0]
+    }
+]
