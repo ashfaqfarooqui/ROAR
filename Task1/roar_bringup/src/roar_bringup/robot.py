@@ -34,7 +34,6 @@ class Robot:
         return self.robotName
 
     def  updatePosition(self, newPosition):
-        rospy.loginfo("Updating position")
         self.marker.pose.position.x = newPosition.x
         self.marker.pose.position.y = newPosition.y
         self.marker.pose.position.z = newPosition.z
@@ -59,8 +58,8 @@ class Robot:
     def getInitialPosition(self):
         return self.initialPosition
 
-    def moveToBin(self,bin):
-        self.moveToDestination(bin.getInitialPosition())
+    def moveTo(self,obj):
+        self.moveToDestination(obj.getInitialPosition())
 
     def moveToDestination(self, destination):
         self.lineList = Marker()
@@ -84,20 +83,19 @@ class Robot:
         self.updatePosition(destination)
 
 class Truck():
-    def __init__(self,position):
+    def __init__(self,truckName,position):
         self.initialPosition = position
-        self.connectedRobot=None
-        self.isAttached = False
+        self.truckName = truckName
         self.marker = Marker()
         self.marker.header.frame_id = "/neck"
         self.marker.type = self.marker.CUBE
         self.marker.action = self.marker.ADD
         self.marker.scale.x = 0.5
         self.marker.scale.y = 0.5
-        self.marker.scale.z = 0.2
+        self.marker.scale.z = 0.1
         self.marker.color.a = 1.0
-        self.marker.color.r = 1.0
-        self.marker.color.g = 1.0
+        self.marker.color.r = 0.7
+        self.marker.color.g = 0.3
         self.marker.color.b = 0.5
         self.marker.pose.orientation.w = 1.0
         self.marker.pose.position.x = position.x
@@ -106,13 +104,13 @@ class Truck():
         self.marker.lifetime = rospy.Duration(0.2)
 
     def getName(self):
-        return self.binName
+        return self.truckName
 
     def getInitialPosition(self):
         return self.initialPosition
 
     def emptyBin(bin):
-        bin.setEmpty(True)
+        bin.setEmptyStatus(True)
 
     def getMarker(self):
         return self.marker
@@ -124,7 +122,6 @@ class Bin(object):
         self.connectedRobot=None
         self.isAttached = False
         self.binName = binName
-        # self.publisher = rospy.Publisher(binName+'_marker',Marker,queue_size=1)
         self.marker = Marker()
         self.marker.header.frame_id = "/neck"
         self.marker.type = self.marker.CYLINDER
@@ -134,24 +131,27 @@ class Bin(object):
         self.marker.scale.z = 0.5
         self.marker.color.a = 1.0
         self.marker.color.r = 1.0
-        self.marker.color.g = 1.0
+        self.marker.color.g = 0.5
         self.marker.color.b = 0.5
         self.marker.pose.orientation.w = 1.0
         self.marker.pose.position.x = position.x
         self.marker.pose.position.y = position.y
         self.marker.pose.position.z = position.z
         self.marker.lifetime = rospy.Duration(0.2)
-        # self.publisher.publish(self.marker)
         self.__thread = threading.Thread(name=binName+"_thread", target=self.__keepAlive)
         self.__update_lock = threading.Lock()
         self.__thread.daemon = True
         self.__thread.start()
 
-    def setEmpty(self,status):
+    def setEmptyStatus(self,status):
+        self.marker.color.r = 0.5
+        self.marker.color.g = 0.5
+        self.marker.color.b = 0.5
         self.isEmpty = status
 
     def getEmptyStatus(self):
         return self.isEmpty
+
     def getName(self):
         return self.binName
 

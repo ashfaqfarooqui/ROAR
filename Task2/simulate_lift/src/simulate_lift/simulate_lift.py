@@ -3,9 +3,10 @@ import roslib
 import rospy
 import time
 import sys
-from roar_msg.srv import *
+from lift_msgs.srv import *
+from lift_msgs.msg import *
 from sensor_msgs.msg import JointState
-
+import actionlib
 
 roslib.load_manifest('simulate_lift')
 rospy.init_node('simulate_lift')
@@ -40,6 +41,21 @@ def handleSimulateLift(req):
     elif(jointValue < -0.78539816339):
         jointValue = -0.78539816339
     return True
+
+class LiftMovement(object):
+    # create messages that are used to publish feedback/result
+    _feedback = lift_msgs.msg.LiftMovementFeedback()
+    _result = lift_msgs.msg.LiftMovementResult()
+
+    def __init__(self, name):
+        self._action_name = name
+        self._as = actionlib.SimpleActionServer(self._action_name, lift_msgs.msg.LiftMovementAction, execute_cb=self.execute_cb, auto_start = False)
+        self._as.start()
+        
+    def execute_cb(self, goal):
+        # Fill in code here 
+      self._result.success = True
+      self._as.set_succeeded(self._result)
 
 if __name__ == '__main__':
     main()

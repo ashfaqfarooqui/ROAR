@@ -41,7 +41,7 @@ class Simulation:
                 self.markerArray.markers.append(bin.getMarker())
             elif val.get("Obj") == "Truck":
                 pos = val.get("Position")
-                truck = Truck(Point(pos[0],pos[1],pos[2]))
+                truck = Truck(val.get("Name"),Point(pos[0],pos[1],pos[2]))
                 self.markerArray.markers.append(truck.getMarker())
                 self.objArray.append(truck)
 

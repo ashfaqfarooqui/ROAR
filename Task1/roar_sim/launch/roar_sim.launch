@@ -1,0 +1,5 @@
+<launch>
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find roar_sim)/config/rviz.rviz" required="true" />
+        <node name="controllerBridge" pkg="controller_bridge" type="controller.py" args="localhost 8080" />
+        <node name="Simulator" pkg="roar_bringup" type="bringup.py"/>
+</launch>

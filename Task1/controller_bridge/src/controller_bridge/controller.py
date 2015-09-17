@@ -4,7 +4,7 @@ import rospy
 import optparse
 
 
-from rose_msg.msg import Event
+from roar_msg.msg import Event
 from controller_bridge.controller_bridge import ControllerBridge
 
 roslib.load_manifest('controller_bridge')
