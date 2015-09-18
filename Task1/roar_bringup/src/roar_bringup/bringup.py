@@ -69,10 +69,14 @@ class Simulation:
         while not rospy.is_shutdown():
             if self.evtList.__len__() > 0:
                 for evt in self.evtList:
-                    tasks = evt.Event.split("_")
-                    methodToCall = getattr(self.getObject(tasks[0]),tasks[1])
-                    methodToCall(self.getObject(tasks[2]))
-                    self.sendUCEvent(evt)
+                    try:
+                        tasks = evt.Event.split("_")
+                        methodToCall = getattr(self.getObject(tasks[0]),tasks[1])
+                        methodToCall(self.getObject(tasks[2]))
+                    except e:
+                        rospy.loginfo(e)
+                    finally:
+                        self.sendUCEvent(evt)
             rospy.sleep(0.1)
 
 
