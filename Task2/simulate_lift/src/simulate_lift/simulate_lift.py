@@ -32,10 +32,10 @@ def main():
 def handleSimulateLift(req):
     if req.directionToMove == "down":
         global jointValue
-        jointValue += 0.1
+        jointValue += 0.005
     elif req.directionToMove == "up":
         global jointValue
-        jointValue -= 0.1
+        jointValue -= 0.005
     if(jointValue > 0.78539816339):
         jointValue = 0.78539816339
     elif(jointValue < -0.78539816339):
@@ -52,10 +52,38 @@ class LiftMovement(object):
         self._as = actionlib.SimpleActionServer(self._action_name, lift_msgs.msg.LiftMovementAction, execute_cb=self.execute_cb, auto_start = False)
         self._as.start()
         
+    def isGoalReached(self,goal):
+        if (goal == "up" and jointValue == -0.78539816339) or (goal == "down" and jointValue == 0.78539816339):
+            return True
+        else:
+            return False
+
     def execute_cb(self, goal):
         # Fill in code here 
-      self._result.success = True
-      self._as.set_succeeded(self._result)
+        goal = goal.direction
+        print "Goal recieved"
+        print goal
+        self.success = self.isGoalReached(goal)
+
+        while self.isGoalReached(goal) == False:
+            rospy.wait_for_service('Simulate_Lift')
+            try:
+                simulate_lift = rospy.ServiceProxy('Simulate_Lift', SimulateLift)
+                resp1 = simulate_lift(goal)
+            except rospy.ServiceException, e:
+                print "Service call failed: %s"%e
+            self.success = self.isGoalReached(goal)
+            if self._as.is_preempt_requested():
+                rospy.loginfo('%s: Preempted' % self._action_name)
+                self._as.set_preempted()
+                self.success = False
+            rospy.sleep(0.015)
+        if self.success:
+          self._result.success = self.success
+          rospy.loginfo('%s: Succeeded' % self._action_name)
+          self._as.set_succeeded(self._result)
+
 
 if __name__ == '__main__':
+    LiftMovement('LiftMovementActionServer')
     main()

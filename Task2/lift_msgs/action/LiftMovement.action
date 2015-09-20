@@ -5,4 +5,3 @@ string direction
 bool success
 ---
 #feedback
-string[] robotState
