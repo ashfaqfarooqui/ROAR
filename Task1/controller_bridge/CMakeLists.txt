@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
  catkin_python_setup()
  catkin_package()
 
-install(PROGRAMS src/controller_bridge/controller.py
+install(PROGRAMS src/controller_bridge/controller_bridge.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
    )
 

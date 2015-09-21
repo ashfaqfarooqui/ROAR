@@ -6,6 +6,6 @@
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(find roar_lift_sim)/config/rviz.rviz" required="true" />
         <node name="simulate_lift" pkg="simulate_lift" type="simulate_lift.py"/>
-        <!-- <include file="$(find freenect_launch)/launch/freenect.launch"/> -->
+        <include file="$(find freenect_launch)/launch/freenect.launch"/>
         <node name="tf_publisher" pkg="tf" type="static_transform_publisher" args="0 -0.5 1 0 0 0 /base_link /camera_link 100"/>
 </launch>

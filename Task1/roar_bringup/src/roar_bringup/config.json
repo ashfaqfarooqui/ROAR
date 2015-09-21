@@ -20,6 +20,11 @@
         "Position": [-4, -4, 0]
     },
     {
+        "Obj": "Bin",
+        "Name": "Bin3",
+        "Position": [0, -4, 0]
+    },
+    {
         "Obj": "Truck",
         "Name": "Truck",
         "Position": [0, 0, 0]
