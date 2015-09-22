@@ -11,9 +11,10 @@ import actionlib
 roslib.load_manifest('simulate_lift')
 rospy.init_node('simulate_lift')
 
+MAX_JOINT_VALUE = 0.78539816339
+MIN_JOINT_VALUE = -0.78539816339
 
-
-jointValue = -0.78539816339
+jointValue = MIN_JOINT_VALUE
 def main():
     jointStatePub = rospy.Publisher('joint_states', JointState, queue_size=5)
     rospy.Service('Simulate_Lift', SimulateLift, handleSimulateLift)
@@ -36,10 +37,10 @@ def handleSimulateLift(req):
     elif req.directionToMove == "up":
         global jointValue
         jointValue -= 0.005
-    if(jointValue > 0.78539816339):
-        jointValue = 0.78539816339
-    elif(jointValue < -0.78539816339):
-        jointValue = -0.78539816339
+    if(jointValue > MAX_JOINT_VALUE):
+        jointValue = MAX_JOINT_VALUE
+    elif(jointValue < MIN_JOINT_VALUE):
+        jointValue = MIN_JOINT_VALUE
     return True
 
 class LiftMovement(object):
