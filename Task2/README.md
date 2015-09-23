@@ -27,22 +27,24 @@ To use the kinect in non-sudo mode do: ```sudo adduser $USER video```
 You may also need a udev rules file to access the camera, create a file using ```sudo nano /etc/udev/rules.d/51-kinect.rules```
 and paste the following text into it:
 
-```# ATTR{product}=="Xbox NUI Motor"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02b0", MODE="0666"
-# ATTR{product}=="Xbox NUI Audio"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ad", MODE="0666"
-# ATTR{product}=="Xbox NUI Camera"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ae", MODE="0666"
-# ATTR{product}=="Xbox NUI Motor"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02c2", MODE="0666"
-# ATTR{product}=="Xbox NUI Motor"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02be", MODE="0666"
-# ATTR{product}=="Xbox NUI Motor"
-SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02bf", MODE="0666"
 ```
+ # ATTR{product}=="Xbox NUI Motor"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02b0", MODE="0666"
+ # ATTR{product}=="Xbox NUI Audio"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ad", MODE="0666"
+ # ATTR{product}=="Xbox NUI Camera"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ae", MODE="0666"
+ # ATTR{product}=="Xbox NUI Motor"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02c2", MODE="0666"
+ # ATTR{product}=="Xbox NUI Motor"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02be", MODE="0666"
+ # ATTR{product}=="Xbox NUI Motor"
+ SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02bf", MODE="0666" 
+ ```
 
 Be sure to logout then back in to see the changes take affect, restarting the system would also be recommended.
 For additional help on installing drivers can be found [here](https://github.com/OpenKinect/libfreenect) and [here](http://openkinect.org/wiki/Getting_Started#Ubuntu_Manual_Install).
+
 ##Running the code
 
 To start up all nodes run:
