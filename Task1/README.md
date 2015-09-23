@@ -36,4 +36,4 @@ The syntax to use these operations is: "<Object performing the task>\_<Task to p
 for example:
 ```Robot1_moveTo_Bin1``` here _Robot1_ would perform the operation, _moveTo_ is the operation that is performed and _Bin1_ is the object on which the operation is performed. In our case _Bin1_ specifies the position of _Bin1_ as defined in the [config](https://github.com/ashfaqfarooqui/ROAR/blob/master/Task1/roar_bringup/src/roar_bringup/config.json) file, and not the current position of the bin. Names _Robot1_ and _Bin1_ correspond to the names provided in the [config](https://github.com/ashfaqfarooqui/ROAR/blob/master/Task1/roar_bringup/src/roar_bringup/config.json) file.
 
-Opperation _moveTo_, _attachBin_ and _dettachBin_ can be performed by the robots. Operation _emptyBin_ can be performed by the truck only.
+Opperation _moveTo_, _attachBin_ and _dettachBin_ can be performed by the robots. Operation _emptyBin_ can be performed by the truck.
