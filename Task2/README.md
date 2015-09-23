@@ -1,5 +1,48 @@
 # Simulation environment for lift meovement
 =====
+
+##Installing drivers for kinect
+Drivers bundled with source are not always perfect and may not be updated, hence its best to install from source. Kinect uses [libfreenect](https://github.com/OpenKinect/libfreenect) drivers.
+
+To install the drivers first uninstall preexisitng drivers that may be outdated using:
+```sudo apt-get remove libfreenect*``` 
+**Warning: This will remove a number of additional packages that depend on libfreenect. Make sure to reinstall them after completing the setup**
+
+Then fetch and build the drivers from source using the following commands:
+```
+sudo apt-get install git-core cmake freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev
+git clone https://github.com/OpenKinect/libfreenect
+cd libfreenect
+mkdir build
+cd build
+cmake -L ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib64/
+```
+To test and see if the installation was a success run: ```sudo freenect-glview```, this should open up a window showing the depth camera view.
+
+To use the kinect in non-sudo mode do: ```sudo adduser $USER video```
+
+You may also need a udev rules file to access the camera, create a file using ```sudo nano /etc/udev/rules.d/51-kinect.rules```
+and paste the following text into it:
+
+```# ATTR{product}=="Xbox NUI Motor"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02b0", MODE="0666"
+# ATTR{product}=="Xbox NUI Audio"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ad", MODE="0666"
+# ATTR{product}=="Xbox NUI Camera"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ae", MODE="0666"
+# ATTR{product}=="Xbox NUI Motor"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02c2", MODE="0666"
+# ATTR{product}=="Xbox NUI Motor"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02be", MODE="0666"
+# ATTR{product}=="Xbox NUI Motor"
+SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02bf", MODE="0666"
+```
+
+Be sure to logout then back in to see the changes take affect, restarting the system would also be recommended.
+For additional help on installing drivers can be found [here](https://github.com/OpenKinect/libfreenect) and [here](http://openkinect.org/wiki/Getting_Started#Ubuntu_Manual_Install).
 ##Running the code
 
 To start up all nodes run:
