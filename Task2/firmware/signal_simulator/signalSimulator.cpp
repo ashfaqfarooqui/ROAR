@@ -1,7 +1,11 @@
 /*
  * rosserial Service Client
  */
-
+#if (ARDUINO >= 100)
+ #include <Arduino.h>
+#else
+ #include <WProgram.h>
+#endif
 #include <ros.h>
 #include <std_msgs/Bool.h>
 #include <lift_msgs/SimulateLift.h>
@@ -18,6 +22,7 @@ std_msgs::Bool bool_msg; //convert to bool
 char up[3] = "up";
 char down[5] = "down";
 
+
 void setup()
 {
   nh.initNode();
@@ -27,13 +32,33 @@ void setup()
   nh.loginfo("Startup complete");
 }
 
+//We average the analog reading to elminate some of the noise
+int averageAnalog(int pin){
+  int v=0;
+  for(int i=0; i<4; i++) v+= analogRead(pin);
+  return v/4;
+}
+
 void loop()
 {
-  SimulateLift::Request req;
-  SimulateLift::Response res;
-  req.directionToMove = up;
-  client.call(req, res);
-  bool_msg.data = res.status;
+  int adcInput;
+  adcInput = map(averageAnalog(0),0,1024,0,5);
+  if(adcInput > 3)
+  {
+      SimulateLift::Request req;
+      SimulateLift::Response res;
+      req.directionToMove = up;
+      client.call(req, res);
+      bool_msg.data = res.status;
+  }
+  else if(adcInput <= 2){
+      SimulateLift::Request req;
+      SimulateLift::Response res;
+      req.directionToMove = down;
+      client.call(req, res);
+      bool_msg.data = res.status;
+  }
+
   // chatter.publish( &str_msg );
   nh.spinOnce();
   delay(100);

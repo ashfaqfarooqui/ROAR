@@ -4,6 +4,7 @@ project(signalSimulator)
 find_package(catkin REQUIRED COMPONENTS
   rosserial_arduino
   rosserial_client
+  lift_msgs
 )
 
 catkin_package()
