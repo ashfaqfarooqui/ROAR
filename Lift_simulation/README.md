@@ -1,4 +1,4 @@
-# Simulation environment for lift meovement
+# Simulation environment for lift movement
 =====
 
 ##Installing drivers for kinect
@@ -49,7 +49,7 @@ For additional help on installing drivers can be found [here](https://github.com
 
 To start up all nodes run:
 
-```roslaunch roar_lift_sim sim_lift.launch```
+```roslaunch roar_lift_sim sim_lift.launch port:=/dev/ttyACMX``` (where X is the port arduino is connected to, read below)
 
 ##Tweaking the physical setup
 
@@ -58,5 +58,11 @@ To make changes to the physical dimensions of the system the [URDF](https://gith
 To change the position and orientation of the camera, the transform with respect to the base_link should be defined  in the [launch](https://github.com/ashfaqfarooqui/ROAR/blob/master/Task2/roar_lift_sim/launch/sim_lift.launch#L10) file.
 The format to specify tf is: ```static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms```
 
-##Making the lift move
+##Using the arduino to simulate lift
+The current branch has code that uses an arduino to simulate the joystick control of the lift. The input is on A0 of the arduino. By providing +5V the lift moves up, GND will move the lift down and +.3V will hold the lift in its place. These values can be adjusted and modified in the [firmware code](https://github.com/ashfaqfarooqui/ROAR/blob/arduinoSim_devel/Lift_simulation/firmware/signal_simulator/signalSimulator.ino) and uploaded using arduino software. 
+
+####Running the arduino node
+Once the code is burnt on the arduino, running ```rosrun rosserial_python serial_node.py /dev/ttyACMX```, where X is the ACM port on which arduino is connected, will connect the arduino to the ROS network. This is already done in the [launch](https://github.com/ashfaqfarooqui/ROAR/blob/arduinoSim_devel/Lift_simulation/roar_lift_sim/launch/sim_lift.launch#L12) file. Running the launch file with the correct port value will suffice, ```roslaunch roar_sim_lift sim_lift.launch port:=/dev/ttyACMx```
+
+##Making the lift move (If you plan not to use the arduino)
 The movement of the lift is made as an [action server](http://wiki.ros.org/actionlib) in ROS. It can be moved by providing a goal as "up" or "down". The action message is available [here](https://github.com/ashfaqfarooqui/ROAR/blob/master/Task2/lift_msgs/action/LiftMovement.action), and can be modified to suit the needs of the client. A simple client can be created following this [example](http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Client%20%28Python%29), where the action server is named: **LiftMovementActionServer**.
