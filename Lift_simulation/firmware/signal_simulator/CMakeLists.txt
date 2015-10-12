@@ -5,7 +5,7 @@ include_directories(${ROS_LIB_DIR}
 
 
 generate_arduino_firmware(signalSimulator
-  SRCS signalSimulator.cpp ${ROS_LIB_DIR}/time.cpp
+  SRCS signalSimulator.cpp ${ROS_LIB_DIR}/time.cpp ros.h
   BOARD uno
   PORT /dev/ttyACM0
 )
