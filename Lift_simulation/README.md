@@ -59,7 +59,7 @@ To change the position and orientation of the camera, the transform with respect
 The format to specify tf is: ```static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms```
 
 ##Using the arduino to simulate lift
-The current branch has code that uses an arduino to simulate the joystick control of the lift. The input is on A0 of the arduino. By providing +5V the lift moves up, GND will move the lift down and +.3V will hold the lift in its place. These values can be adjusted and modified in the [firmware code](https://github.com/ashfaqfarooqui/ROAR/blob/arduinoSim_devel/Lift_simulation/firmware/signal_simulator/signalSimulator.ino) and uploaded using arduino software. 
+The current branch has code that uses an arduino to simulate the joystick control of the lift. The input is on A0 of the arduino. By providing +5V the lift moves up, GND will move the lift down and +3.3V will hold the lift in its place. These values can be adjusted and modified in the [firmware code](https://github.com/ashfaqfarooqui/ROAR/blob/arduinoSim_devel/Lift_simulation/firmware/signal_simulator/signalSimulator.ino) and uploaded using arduino software. 
 
 ####Running the arduino node
 Once the code is burnt on the arduino, running ```rosrun rosserial_python serial_node.py /dev/ttyACMX```, where X is the ACM port on which arduino is connected, will connect the arduino to the ROS network. This is already done in the [launch](https://github.com/ashfaqfarooqui/ROAR/blob/arduinoSim_devel/Lift_simulation/roar_lift_sim/launch/sim_lift.launch#L12) file. Running the launch file with the correct port value will suffice, ```roslaunch roar_sim_lift sim_lift.launch port:=/dev/ttyACMx```
