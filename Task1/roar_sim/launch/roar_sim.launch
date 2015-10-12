@@ -1,7 +1,0 @@
-<launch>
-        <arg name= "hostname" default="localhost"/>
-        <arg name= "port" default="8080"/>
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find roar_sim)/config/rviz.rviz" required="true" />
-        <node name="controllerBridge" pkg="controller_bridge" type="controller_bridge.py" args="$(arg hostname) $(arg port)" />
-        <node name="Simulator" pkg="roar_bringup" type="bringup.py"/>
-</launch>
