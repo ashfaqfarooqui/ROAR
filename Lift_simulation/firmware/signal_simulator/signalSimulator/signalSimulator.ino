@@ -21,7 +21,7 @@ std_msgs::Bool bool_msg; //convert to bool
 
 char up[3] = "up";
 char down[5] = "down";
-
+int inPin = 2;
 
 void setup()
 {
@@ -43,7 +43,8 @@ void loop()
 {
   int adcInput;
   adcInput = map(averageAnalog(0),0,1024,0,5);
-  if(adcInput > 3)
+  int enableLift = digitalRead(inPin);
+  if(adcInput > 3 && enableLift == HIGH)
   {
       SimulateLift::Request req;
       SimulateLift::Response res;
@@ -51,14 +52,14 @@ void loop()
       client.call(req, res);
       bool_msg.data = res.status;
   }
-  else if(adcInput <= 2){
+  else if(adcInput <= 2 && enableLift == LOW){
       SimulateLift::Request req;
       SimulateLift::Response res;
       req.directionToMove = down;
       client.call(req, res);
       bool_msg.data = res.status;
   }
-
+  
   nh.spinOnce();
   delay(100);
 }
