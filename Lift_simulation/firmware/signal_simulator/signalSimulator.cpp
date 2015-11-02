@@ -21,13 +21,13 @@ std_msgs::Bool bool_msg; //convert to bool
 
 char up[3] = "up";
 char down[5] = "down";
-
+int inPin = 2;
 
 void setup()
 {
   nh.initNode();
   nh.serviceClient(client);
-  
+  pinMode(inPin, INPUT);
   while(!nh.connected()) nh.spinOnce();
   nh.loginfo("Startup complete");
 }
@@ -42,8 +42,10 @@ int averageAnalog(int pin){
 void loop()
 {
   int adcInput;
+  int enableLift = digitalRead(inPin);
   adcInput = map(averageAnalog(0),0,1024,0,5);
-  if(adcInput > 3)
+  
+  if(adcInput > 3 && enableLift == HIGH)
   {
       SimulateLift::Request req;
       SimulateLift::Response res;
@@ -51,7 +53,7 @@ void loop()
       client.call(req, res);
       bool_msg.data = res.status;
   }
-  else if(adcInput <= 2){
+  else if(adcInput <= 2 && enableLift == LOW){
       SimulateLift::Request req;
       SimulateLift::Response res;
       req.directionToMove = down;
