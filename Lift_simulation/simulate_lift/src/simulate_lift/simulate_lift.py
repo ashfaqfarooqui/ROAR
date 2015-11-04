@@ -18,7 +18,7 @@ jointValue = MIN_JOINT_VALUE
 def main():
     jointStatePub = rospy.Publisher('joint_states', JointState, queue_size=5)
     rospy.Service('Simulate_Lift', SimulateLift, handleSimulateLift)
-    rate = rospy.Rate(125)
+    rate = rospy.Rate(30)
     while not rospy.is_shutdown():
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
@@ -33,10 +33,10 @@ def main():
 def handleSimulateLift(req):
     if req.directionToMove == "down":
         global jointValue
-        jointValue += 0.005
+        jointValue += 0.003
     elif req.directionToMove == "up":
         global jointValue
-        jointValue -= 0.005
+        jointValue -= 0.003
     if(jointValue > MAX_JOINT_VALUE):
         jointValue = MAX_JOINT_VALUE
     elif(jointValue < MIN_JOINT_VALUE):
