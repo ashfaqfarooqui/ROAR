@@ -10,11 +10,17 @@ import actionlib
 
 roslib.load_manifest('simulate_lift')
 rospy.init_node('simulate_lift')
+global jointValue, shaking, shakingUp
+
 
 MAX_JOINT_VALUE = 0.78539816339
 MIN_JOINT_VALUE = -0.78539816339
+MOVEMENT_STEP = 0.005
+SHAKE_BOTTOM_VALUE = -0.6
+shaking = False
+shakingUp = True
 
-jointValue = MIN_JOINT_VALUE
+jointValue =  MAX_JOINT_VALUE
 def main():
     jointStatePub = rospy.Publisher('joint_states', JointState, queue_size=5)
     rospy.Service('Simulate_Lift', SimulateLift, handleSimulateLift)
@@ -31,16 +37,23 @@ def main():
 
 
 def handleSimulateLift(req):
+    global jointValue, shaking, shakingUp
     if req.directionToMove == "down":
-        global jointValue
-        jointValue += 0.003
+        jointValue += MOVEMENT_STEP
+        shakingUp = True
     elif req.directionToMove == "up":
-        global jointValue
-        jointValue -= 0.003
-    if(jointValue > MAX_JOINT_VALUE):
+        if not shakingUp:
+            jointValue += MOVEMENT_STEP
+        else:
+            jointValue -= MOVEMENT_STEP
+    if(jointValue >= MAX_JOINT_VALUE):
         jointValue = MAX_JOINT_VALUE
-    elif(jointValue < MIN_JOINT_VALUE):
+        shakingUp = True
+    elif(jointValue <= MIN_JOINT_VALUE):
         jointValue = MIN_JOINT_VALUE
+        shakingUp = False
+    if req.directionToMove == "up" and jointValue > SHAKE_BOTTOM_VALUE and not shakingUp:
+            shakingUp = True
     return True
 
 class LiftMovement(object):
@@ -54,7 +67,9 @@ class LiftMovement(object):
         self._as.start()
         
     def isGoalReached(self,goal):
-        if (goal == "up" and jointValue == -0.78539816339) or (goal == "down" and jointValue == 0.78539816339):
+    	rospy.loginfo("Check")
+        global shaking
+        if (goal == "up" and jointValue == MIN_JOINT_VALUE and not shaking) or (goal == "down" and jointValue == MAX_JOINT_VALUE):
             return True
         else:
             return False
@@ -62,7 +77,7 @@ class LiftMovement(object):
     def execute_cb(self, goal):
         # Fill in code here 
         goal = goal.direction
-        print "Goal recieved"
+        rospy.loginfo("Goal recieved")
         print goal
         self.success = self.isGoalReached(goal)
 
